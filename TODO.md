@@ -1,44 +1,67 @@
-* [1] Forker le projet https://github.com/jeromefath/Symfony2 depuis l'interface de GitHub.
+* [1] Mettre à jour les sources de votre fork avec le dépôt d'origine
 
-* [2] Placez vous à la racine de votre répertoire de travail (www) depuis l'invite de commande. 
-Chargez les sources de votre fork avec la commande "git clone https://github.com/{username}/Symfony2.git Symfony2_Fork"
+    1. Ajoutez à votre fork le remote du projet d'origine
 
-* [3] Faire tourner l'application forkée sur votre poste de travail :
+git remote add projet_original_master https://github.com/jeromefath/Symfony2
 
-    1. Chargement des vendors via la commande "php composer.phar update"
+    2. Mettez à jour votre fork en local
 
-    2. Votre application doit renvoyer une réponse valide à l'addresse : http://localhost/Symfony2_Fork/web/app_dev.php/bootstrap
+git fetch projet_original_master
 
-=======================
-Une fois le projet forké, il faudra envoyer sur votre nouveau dépôt ; le code qui devra être implémenté dans les excercices. 
-Pour utiliser Git, vous pouvez utiliser l'invite de commande ou un client Git avec une interface graphique comme le logiciel SourceTree.
-Les 2/3 lignes de commandes que vous devrez utiliser pour envoyer votre code sur le dépôt seront surement plus simple à maitriser qu'un logiciel comme SourceTree très complet. 
-Voici un tutoriel permettant d'apprendre les commandes de base : http://openclassrooms.com/courses/gerez-vos-codes-source-avec-git
+    3. Fusionnez (merge) maintenant votre copie locale avec le projet d'origine
 
-Exercices
-=======================
+git checkout master
 
-* [1] Créer un nouveau bundle nommé MmiBlogBundle => servira à implémenter les fonctionnalités de votre blog
+git merge projet_original_master/master
 
-Lancez la commande "php app/console generate:bundle" depuis l'invite de commande.
+    4. Corriger les conflits éventuels
+
+http://alainericgauthier.com/git/gerer_les_conflits_de_fusion
+
+    5. Validez vos changements
+
+git commit -a -m "Synchronisation avec le projet original"
+
+    6. Envoyez vos changements sur github
+
+git push
+
+* [2] Gestion de thèmes bootstrap
+
+    1. Ajouter 1 ou X thème bootstrap (http://bootswatch.com) dans le MmiBootstrapBundle
         
-Bundle namespace : Mmi/Bundle/BlogBundle
+        * Ajoutez les fichiers css dans les ressources de votre bundle
 
-Target directory : valeur par défaut
+    2. Créer une nouvelle route pour contrôler le thème dans le MmiBootstrapBundle
 
-Configuration format : annotation
+        * Envoyez en paramètre le nom du thème à utiliser
 
-Utilisez les valeurs par defaut pour le reste des questions.
-Votre nouveau bundle est désormais disponible et préconfiguré, vous allez pouvoir coder.
+        * Stockez en session le nom du thème
 
-* [2] Créer un layout pour votre MmiBlogBundle => servira à définir la mise en page html de votre blog
+        * Redirigez l'utilisateur (prévoir la possibilité de spécifier une url de redirection)
 
-Héritez du layout de MmiBoostrapBundle pour faciliter et améliorer la mise en page html/css en utilisant bootstrap.
+    3. Chargement du thème dans le MmiBootstrapBundle 
 
-Ajoutez une feuille de style au layout pour pouvoir débuter l'intégration css de votre blog.
+        * Modifiez le layout pour charger les fichiers css du thème dont le nom est stocké en session
 
-* [3] Créer une homepage pour votre blog
+    4. Gestion du thème dans le MmiBlogBundle
 
-Utilisez le DefaultController ajouté lors de la création du MmiBlogBundle depuis l'invite de commande.
+        * Modifiez la navbar du blog pour ajouter un menu déroulant permettant de modifier le thème à utiliser (lorsque l'utilisateur clique sur le lien d'un thème, il doit être redirigé vers la homepage du blog)
 
-Le template de votre homepage doit hériter du layout de votre blog.
+* [3] Lecture d'un flux RSS ou Atom
+        
+    1. Utiliser Composer pour charger un composant tiers
+    
+        * Ajoutez le composant ZendFeed (ZendFramework), interface de programmation pour la gestion de flux RSS et Atom http://framework.zend.com/manual/current/en/modules/zend.feed.introduction.html
+
+        * Lancez la commande "php composer.phar require zendframework/zend-feed:2.0.*"
+
+        * Lancez la commande "php composer.phar require zendframework/zend-http:2.0.*"
+
+    2. Afficher un flux RSS dans la sidebar du MmiBlogBundle
+
+        * Créez une nouvelle classe controller appelée FeedController
+        
+        * Créez une nouvelle méthode qui devra utiliser le composant ZendFeed pour lire un flux RSS de votre choix. Envoyez les informations issues du flux à un fichier de template pour afficher les entrées dans une liste html
+
+        * Appelez la méthode render depuis votre layout pour afficher la liste html dans votre sidebar  {{ render(controller('MmiBlogBundle:Feed:votreMethode')) }}

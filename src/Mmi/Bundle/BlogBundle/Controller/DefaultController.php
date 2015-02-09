@@ -2,19 +2,18 @@
 
 namespace Mmi\Bundle\BlogBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
     /**
-     * @Route("/blogbundle")
-     * *@Template()
+     * @Route("/", name="blog_homepage")
      */
-    public function indexAction()
+    public function homepageAction()
     {
-        /*return array('name' => $name);*/
-        return $this->get('templating')->renderResponse('MmiBlogBundle:Default:index.html.twig');
+        return $this->get('templating')->renderResponse('MmiBlogBundle:Default:homepage.html.twig');
+
     }
 }

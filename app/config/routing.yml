@@ -1,7 +1,7 @@
 mmi_blog:
     resource: "@MmiBlogBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /blog
 
 mmi_bootstrap:
     resource: "@MmiBootstrapBundle/Controller/"

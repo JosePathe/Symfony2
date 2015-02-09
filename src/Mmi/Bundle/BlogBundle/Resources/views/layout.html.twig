@@ -1,1 +1,31 @@
 {% extends 'MmiBootstrapBundle::layout.html.twig' %}
+
+{% block main_style %}
+    {% stylesheets '@MmiBlogBundle/Resources/public/css/main.css' %}
+         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+{% endblock main_style %}
+         
+{% block title %}Blog MMI{% endblock %}
+         
+{% block navbar %}
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="{{ url('blog_homepage') }}" class="navbar-brand">
+                Blog MMI
+            </a>
+        </div>
+    </div>
+</nav>
+{% endblock %} 
+         
+{% block content_sidebar %}
+<div class="panel panel-default">
+    <div class="panel-heading">Flux RSS</div>
+    <div class="panel-body">
+        {% block sidebar_rss %}{% endblock %}
+    </div>
+</div>
+{% endblock %}
+
