@@ -1,14 +1,27 @@
 {% extends '::base.html.twig' %}
 
 {% block stylesheets %}
-        
+    
+    {% set theme = app.session.get('theme') %}
+
     {% block bootstrap_style %}
+        {% if theme == 'default' %}
          {% stylesheets 
             '@MmiBootstrapBundle/Resources/public/css/bootstrap.min.css'
             '@MmiBootstrapBundle/Resources/public/css/bootstrap-theme.min.css'
          %}
          <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
          {% endstylesheets %}
+        {% endif %}
+
+        {% if theme == 'yeti' %}
+         {% stylesheets 
+            '@MmiBootstrapBundle/Resources/public/css/bootstrap-yeti.css'
+            '@MmiBootstrapBundle/Resources/public/css/bootstrap-yeti.min.css'
+         %}
+         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+         {% endstylesheets %}
+        {% endif %}
     {% endblock bootstrap_style %}
 
     {% block main_style %}{% endblock main_style %}
