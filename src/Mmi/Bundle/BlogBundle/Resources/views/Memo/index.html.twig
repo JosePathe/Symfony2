@@ -1,0 +1,28 @@
+{% extends 'MmiBlogBundle::layout.html.twig' %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block content_content %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Memo !
+    </div>
+    <div class="panel-body">
+        {{ form(form, {'action': url('blog_memo_send')}) }}
+    </div>
+</div>
+
+{% for flashMessage in app.session.flashbag.get('error') %}
+<div class="alert alert-danger" role="alert">
+    {{ flashMessage }}
+</div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('success') %}
+<div class="alert alert-success" role="alert">
+    {{ flashMessage }}
+</div>
+{% endfor %}
+
+{% endblock %}

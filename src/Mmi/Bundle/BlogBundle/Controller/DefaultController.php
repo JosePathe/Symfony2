@@ -23,7 +23,18 @@ class DefaultController extends Controller
      */
     public function themeAction($name, Request $request)
 	{
+        //stockage du nom du thème dans la session
 	    $request->getSession()->set('theme', $name);
+
+        //redirection de l'utilisateur
 	    return $this->redirect($this->generateUrl('blog_homepage'));
 	}
+
+    /**
+     * @Route("/page", name="blog_page")
+     */
+    public function pageAction()
+    {
+        return $this->get('templating')->renderResponse('MmiBlogBundle:Default:page.html.twig');
+    }
 }

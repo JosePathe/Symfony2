@@ -1,0 +1,18 @@
+{% extends 'MmiBlogBundle::layout.html.twig' %}
+
+{% block content_content %}
+<div class="panel panel-default">
+    <div class="panel-heading">Bienvenue sur le blog de l'IUT du Bourget du Lac</div>
+    <div class="panel-body">
+        <p>Salut gros !</p>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Ton mémo !</div>
+    <div class="panel-body">
+    	<p>Sujet : {{ memo.subject }}</p>
+        <p>Message : {{ memo.message }}</p>
+    </div>
+</div>
+{% endblock %}

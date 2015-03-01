@@ -5,7 +5,7 @@
     {% set theme = app.session.get('theme') %}
 
     {% block bootstrap_style %}
-        {% if theme == 'default' or theme == '' %}
+        {% if theme == 'default' or theme is null %}
          {% stylesheets 
             '@MmiBootstrapBundle/Resources/public/css/bootstrap.min.css'
             '@MmiBootstrapBundle/Resources/public/css/bootstrap-theme.min.css'
