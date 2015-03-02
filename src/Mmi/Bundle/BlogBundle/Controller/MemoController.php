@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Description of ContactController
+ * Description of MemoController
  *
  * @author Johann Berthet
  */
@@ -36,7 +36,7 @@ class MemoController extends Controller {
         
         //création d'un objet memo vide
         $memo = new Memo();
-        
+
         //construction du formulaire
         $form = $this->createForm(new MemoForm(), $memo);
         
@@ -46,7 +46,13 @@ class MemoController extends Controller {
         //vérifie que les données transmises sont valides
         if ($form->isValid()) {
 
-            $request->getSession()->set('memo', $memo);
+            $memos = $request->getSession()->get('memos', array());
+            $memos[] = $memo;
+
+            $request->getSession()->set('memos', $memos);
+
+            //redirection de l'utilisateur
+            return $this->redirect($this->generateUrl('blog_homepage'));
 
         }
 
@@ -54,6 +60,28 @@ class MemoController extends Controller {
         return $this->get('templating')->renderResponse('MmiBlogBundle:Memo:index.html.twig', array(
             'form' => $form->createView()
         ));
+    }
+
+    /**
+     * @Route("/memo/read", name="blog_memo_read")
+     */
+    public function readAction() {
+
+        return $this->get('templating')->renderResponse('MmiBlogBundle:Memo:read.html.twig');
+
+    }
+
+    /**
+     * @Route("/memo/delete/{id}", name="blog_memo_delete")
+     */
+    public function deleteAction($id, Request $request) {
+
+        //intialisation du memo dans la session
+        $request->getSession()->remove('memos', $id);
+
+        //redirection de l'utilisateur
+        return $this->redirect($this->generateUrl('blog_memo_read'));
+
     }
 }
 

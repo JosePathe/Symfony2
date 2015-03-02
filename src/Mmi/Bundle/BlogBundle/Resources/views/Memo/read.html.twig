@@ -1,0 +1,15 @@
+{% extends 'MmiBlogBundle::layout.html.twig' %}
+
+{% set memos = app.session.get('memos') %}
+
+{% block content_content %}
+
+{% for memo in memos %}
+    <div class="alert alert-info" role="alert">
+        {{ memo.message }}
+        <a href="{{ url('blog_memo_delete', {id:memo.id }) }}" class="close" aria-label="Close" ><span aria-hidden="true">&times;</span></a>
+    </div>
+{% endfor %}
+
+
+{% endblock %}

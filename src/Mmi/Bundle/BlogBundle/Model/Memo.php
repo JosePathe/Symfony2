@@ -5,7 +5,7 @@ namespace Mmi\Bundle\BlogBundle\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Description of Contact
+ * Description of Memo
  *
  * @author Johann Berthet
  */
@@ -13,22 +13,21 @@ class Memo {
     
     /**
      * @Assert\Type(type="string")
-     * @Assert\NotBlank()
-     */
-    protected $subject;
-    
+     */  
+    protected $id;
+
     /**
      * @Assert\Type(type="string")
      * @Assert\NotBlank()
      */
     protected $message;
-    
-    public function getSubject() {
-        return $this->subject;
+
+    public function getId() {
+        return $this->id;
     }
 
-    public function setSubject($subject) {
-        $this->subject = $subject;
+    public function setId($id) {
+        $this->id = $id;
     }
 
     public function getMessage() {

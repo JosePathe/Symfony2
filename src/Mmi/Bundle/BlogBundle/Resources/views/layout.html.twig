@@ -1,7 +1,5 @@
 {% extends 'MmiBootstrapBundle::layout.html.twig' %}
 
-{% set memo = app.session.get('memo') %}
-
 {% block main_style %}
 	    {% stylesheets '@MmiBlogBundle/Resources/public/css/main.css' %}
 	         <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
@@ -20,9 +18,16 @@
         <ul class="nav navbar-nav">
             <li><a href="{{ url('blog_homepage') }}">Accueil</a></li>
             <li><a href="{{ url('blog_page') }}">Page 1</a></li>
-            <li><a href="{{ url('blog_memo') }}">Memo</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mémo <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{{ url('blog_memo') }}">Ajouter</a></li>
+            <li class="divider"></li>
+            <li><a href="{{ url('blog_memo_read') }}">Voir</a></li>
+          </ul>
+        </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Choix thème <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">

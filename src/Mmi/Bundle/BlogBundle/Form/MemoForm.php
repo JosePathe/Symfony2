@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Description of ContactForm
+ * Description of MemoForm
  *
  * @author Johann Berthet
  */
@@ -28,8 +28,8 @@ class MemoForm extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('subject', null, array(
-            'label' => 'Sujet'
+        ->add('id', 'hidden', array(
+            'data' => uniqid()
         ))
         ->add('message', 'textarea', array(
             'label' => 'Message'
