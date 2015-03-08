@@ -7,9 +7,11 @@
 {% for memo in memos %}
     <div class="alert alert-info" role="alert">
         {{ memo.message }}
-        <a href="{{ url('blog_memo_delete', {id:memo.id }) }}" class="close" aria-label="Close" ><span aria-hidden="true">&times;</span></a>
+        {{ memo.id }}
+        <a href="{{ url('blog_memo_delete', {id:memo.id, target:'blog_memo_delete'}) }}" class="close" aria-label="Close" ><span aria-hidden="true">&times;</span></a>
     </div>
 {% endfor %}
 
+<a href="{{ url('blog_memo_delete_all') }}" class="btn btn-primary" role="button">Supprimer tous les mémos</a>
 
 {% endblock %}

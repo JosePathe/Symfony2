@@ -72,17 +72,35 @@ class MemoController extends Controller {
     }
 
     /**
-     * @Route("/memo/delete/{id}", name="blog_memo_delete")
+     * @Route("/memo/deleteall", name="blog_memo_delete_all")
      */
-    public function deleteAction($id, Request $request) {
+    public function deleteAllAction(Request $request) {
 
         //intialisation du memo dans la session
-        $request->getSession()->remove('memos', $id);
+        $request->getSession()->remove('memos');
 
         //redirection de l'utilisateur
         return $this->redirect($this->generateUrl('blog_memo_read'));
 
     }
+
+    /**
+     * @Route("/memo/delete/{id}", name="blog_memo_delete")
+     */
+    public function deleteAction($id, Request $request) {
+
+        //intialisation du memo dans la session
+        $memos = $request->getSession()->get('memos');
+        unset($memos[$id]);
+        $request->getSession()->set('memos', $memos);
+
+        //$request->getSession()->remove('memos', $memos[$id]);
+
+        //redirection de l'utilisateur
+        return $this->redirect($this->generateUrl('blog_memo_read'));
+
+    }
+
 }
 
 ?>
