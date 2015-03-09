@@ -4,11 +4,10 @@
 
 {% block content_content %}
 
-{% for memo in memos %}
+{% for index, memo in memos %}
     <div class="alert alert-info" role="alert">
         {{ memo.message }}
-        {{ memo.id }}
-        <a href="{{ url('blog_memo_delete', {id:memo.id, target:'blog_memo_delete'}) }}" class="close" aria-label="Close" ><span aria-hidden="true">&times;</span></a>
+        <a href="{{ url('blog_memo_delete', {index: index}) }}" class="close" aria-label="Close" ><span aria-hidden="true">&times;</span></a>
     </div>
 {% endfor %}
 

@@ -52,7 +52,7 @@ class MemoController extends Controller {
             $request->getSession()->set('memos', $memos);
 
             //redirection de l'utilisateur
-            return $this->redirect($this->generateUrl('blog_homepage'));
+            return $this->redirect($this->generateUrl('blog_memo_read'));
 
         }
 
@@ -85,13 +85,19 @@ class MemoController extends Controller {
     }
 
     /**
-     * @Route("/memo/delete/{id}", name="blog_memo_delete")
+     * @Route("/memo/delete/{index}", name="blog_memo_delete")
      */
-    public function deleteAction($id, Request $request) {
+    public function deleteAction($index, Request $request) {
 
         //intialisation du memo dans la session
-        $memos = $request->getSession()->get('memos');
-        unset($memos[$id]);
+        $memos = $request->getSession()->get('memos', array());
+
+        if(!isset($memos[$index])) {
+            throw $this->createNotFoundException();
+        }
+
+        unset($memos[$index]);
+
         $request->getSession()->set('memos', $memos);
 
         //$request->getSession()->remove('memos', $memos[$id]);
