@@ -1,0 +1,20 @@
+{% extends 'MmiBlogBundle::layout.html.twig' %}
+
+{% block content_content %}
+
+{% for article in articles %}
+
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+	        {{ article.title | raw }}
+	    </div>
+	    <div class="panel-body">
+	    	{{ article.content | raw }}
+	    	<a href="{{ url('blog_article_update', { id: article.id }) }}"><span aria-hidden="true">Modifier</span></a>
+	    	<a href="{{ url('blog_article_delete', { id: article.id }) }}" class="close" aria-label="Close" ><span aria-hidden="true">&times;</span></a>
+	    </div>
+    </div>
+
+{% endfor %}
+
+{% endblock %}

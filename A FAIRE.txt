@@ -1,0 +1,17 @@
+Commentaire
+- ajout
+- suppression
+- modifier
+- lister les commentaires
+
+Compteur de likes pour les articles
+
+Gérer un article par page
+
+Recherche d'article par titre
+
+Editeur de texte riche -> genemu form bundle -> captcha (facultatif)
+
+Upload d'une image -> upload doctrine symfony (facultatif)
+
+pour la mi-mai
