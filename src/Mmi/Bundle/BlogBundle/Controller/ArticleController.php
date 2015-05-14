@@ -8,6 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
+use Mmi\Bundle\BlogBundle\Entity\Comment;
+use Mmi\Bundle\BlogBundle\Form\CommentForm;
+
 
 /**
  * Description of ArticleController
@@ -37,7 +40,7 @@ class ArticleController extends Controller {
         	
         	$this->getDoctrine()->getManager()->flush();
 
-        	return $this->redirect($this->generateUrl('blog_article_list'));
+        	return $this->redirect($this->generateUrl('blog_article_read', array ('id' => $id)));
         }
 
         return $this->render('MmiBlogBundle:Article:update.html.twig', array(
@@ -61,7 +64,7 @@ class ArticleController extends Controller {
 		$this->getDoctrine()->getManager()->flush();
 
 		//redirection de l'utilisateur
-        return $this->redirect($this->generateUrl('blog_article_list'));
+        return $this->redirect($this->generateUrl('blog_article_read', array ('id' => $id)));
 
 	}
 
@@ -81,7 +84,7 @@ class ArticleController extends Controller {
         	
         	$this->getDoctrine()->getManager()->persist($article);
         	$this->getDoctrine()->getManager()->flush();
-        	return $this->redirect($this->generateUrl('blog_article_list'));
+        	return $this->redirect($this->generateUrl('blog_article_read', array ('id' => $article->getId())));
         }
 
         return $this->render('MmiBlogBundle:Article:create.html.twig', array(
@@ -96,8 +99,59 @@ class ArticleController extends Controller {
 
     	$article = $this->getDoctrine()->getManager()->getRepository('MmiBlogBundle:Article')->findAll();
 
+        $comments = $this->getDoctrine()->getManager()->getRepository('MmiBlogBundle:Comment')->findAll();
+
         return $this->render('MmiBlogBundle:Article:list.html.twig', array(
-        	'articles' => $article
+        	'articles' => $article,
+            'comments' => $comments,
+        ));
+
+    }
+
+    /**
+     * @Route("/article/{id}/read", name="blog_article_read")
+     */
+    public function readAction($id, Request $request) {
+
+        $article = $this->getDoctrine()->getManager()->getRepository('MmiBlogBundle:Article')->find($id);
+
+        $comments = $this->getDoctrine()->getManager()->getRepository('MmiBlogBundle:Comment')->findBy(array ('idArticle' => $id));
+
+        $comment = new Comment($id);
+        
+        //construction du formulaire
+        $form = $this->createForm(new CommentForm(), $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $this->getDoctrine()->getManager()->persist($comment);
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirect($this->generateUrl('blog_article_read', array ('id' => $id)));
+        }
+
+        return $this->render('MmiBlogBundle:Article:read.html.twig', array(
+            'article' => $article,
+            'comments' => $comments,
+            'form' => $form->createView()
+        ));
+
+    }
+
+    /**
+     * @Route("/article/search", name="blog_article_search")
+     */
+    public function listSearchAction(Request $request) {
+
+        if (isset($_POST['keyword'])&& $_POST['keyword']!=""){
+            $keyword = $_POST['keyword'];
+        }
+
+        $articles = $this->getDoctrine()->getManager()->getRepository('MmiBlogBundle:Article')->findByTitle($keyword);
+
+        return $this->render('MmiBlogBundle:Article:search.html.twig', array(
+            'articles' => $articles,
         ));
 
     }

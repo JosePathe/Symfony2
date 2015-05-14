@@ -2,7 +2,9 @@
 
 {% block content_content %}
 
-<h1>Liste des articles</h1>
+<h1>Liste des articles recherchés</h1>
+
+{% if articles %}
 
 {% for article in articles %}
 
@@ -13,5 +15,11 @@
 </h4>
 
 {% endfor %}
+
+{% else %}
+
+<h3>Pas d'article correspondant à votre recherche.</h3>
+
+{% endif %}
 
 {% endblock %}

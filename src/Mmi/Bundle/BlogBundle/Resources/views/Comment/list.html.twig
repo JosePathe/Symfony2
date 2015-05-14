@@ -1,0 +1,20 @@
+{% extends 'MmiBlogBundle::layout.html.twig' %}
+
+{% block content_content %}
+
+{% for comment in comments %}
+
+	<div class="panel panel-default">
+	    <div class="panel-heading">
+	        {{ comment.autor | raw }}
+	    </div>
+	    <div class="panel-body">
+	    	{{ comment.content | raw }}
+	    	<a href="{{ url('blog_comment_update', { id: comment.id }) }}"><span aria-hidden="true">Modifier</span></a>
+	    	<a href="{{ url('blog_comment_delete', { id: comment.id }) }}" class="close" aria-label="Close" ><span aria-hidden="true">&times;</span></a>
+	    </div>
+    </div>
+
+{% endfor %}
+
+{% endblock %}

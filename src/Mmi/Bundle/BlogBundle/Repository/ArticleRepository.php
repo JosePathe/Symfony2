@@ -27,6 +27,20 @@ class ArticleRepository extends EntityRepository {
 
 	}
 
+	public function findByTitle($keyword) {
+
+		$queryBuilder = $this->createQueryBuilder('article');
+
+		return $queryBuilder
+		->select('article')
+		->where('article.title like :keyword')
+		->setParameter('keyword', '%'.$keyword.'%')
+		->addOrderBy('article.createdAt', 'DESC') //affichage par date de création
+		->getQuery()
+		->getResult();
+
+	}
+
 }
 
 ?>
